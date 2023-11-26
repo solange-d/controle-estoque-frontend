@@ -1,10 +1,15 @@
 import * as React from 'react';
 import { TextField, Button, Paper, Typography, Grid, Box } from '@mui/material';
 import Stack from '@mui/material/Stack';
-import { Link, useNavigate } from 'react-router-dom';
-import { cadastrarFornecedor } from '../../api/FornecedorService';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import { obterFornecedorPorId, atualizarFornecedor } from '../../api/FornecedorService';
 import Alert from '@mui/material/Alert';
-import { successMessage } from '../../messages/messages';
+import { successMessage, errorMessage } from '../../messages/messages';
+
+interface Params {
+  idFornecedor: string;
+  [key: string]: string | undefined;
+}
 
 interface FormValues {
   cnpj: string;
@@ -13,43 +18,56 @@ interface FormValues {
   telefone: string;
 }
 
-function CadastroFornecedorForm() {
+function EdicaoFornecedorForm() {
+  const { idFornecedor } = useParams<Params>();
   const [formValues, setFormValues] = React.useState<FormValues>({
     cnpj: '',
     email: '',
     nome: '',
     telefone: '',
   });
-
   const [showAlert, setShowAlert] = React.useState(false);
   const navigate = useNavigate();
-  const successText = successMessage('Fornecedor cadastrado com sucesso');
+  const successText = successMessage('Fornecedor editado com sucesso'); 
+
+  React.useEffect(() => {
+    const carregarFornecedor = async () => {
+      try {
+        const fornecedor = await obterFornecedorPorId(idFornecedor);
+        setFormValues({
+          cnpj: fornecedor.cnpj,
+          email: fornecedor.email,
+          nome: fornecedor.nome,
+          telefone: fornecedor.telefone,
+        });
+      } catch (error) {
+        console.error('Erro ao carregar fornecedor para edição:', error);
+      }
+    };
+
+    carregarFornecedor();
+  }, [idFornecedor]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues({
-      ...formValues,
+    setFormValues((prevFormValues) => ({
+      ...prevFormValues,
       [event.target.name]: event.target.value,
-    });
+    }));
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      await cadastrarFornecedor(formValues);
-      setShowAlert(true);
+      if (idFornecedor) {
+        await atualizarFornecedor(idFornecedor, formValues);
+        setShowAlert(true);
         setTimeout(() => {
           navigate('/fornecedores');
         }, 2000);
-      setFormValues({
-        cnpj: '',
-        email: '',
-        nome: '',
-        telefone: '',
-      });
-
+      }
     } catch (error) {
-      // Lide com erros durante o cadastro, por exemplo, exibindo uma mensagem de erro
-      console.error('Erro ao cadastrar fornecedor:', error);
+      console.error('Erro ao atualizar fornecedor:', error);
     }
   };
 
@@ -65,8 +83,9 @@ function CadastroFornecedorForm() {
     >
       <Paper elevation={3} style={{ padding: '16px' }}>
         <Typography variant="h6" gutterBottom>
-          Cadastro de Fornecedor
+          Editar Fornecedor
         </Typography>
+
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -109,11 +128,11 @@ function CadastroFornecedorForm() {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={8}/>
+            <Grid item xs={8} />
             <Grid item xs={6}>
               <Stack spacing={2} direction="row">
                 <Button type="submit" variant="contained" color="success">
-                  Cadastrar
+                  Atualizar
                 </Button>
                 <Link to="/fornecedores">
                   <Button variant="outlined" color="error">
@@ -122,14 +141,12 @@ function CadastroFornecedorForm() {
                 </Link>
               </Stack>
             </Grid>
-            
           </Grid>
         </form>
       </Paper>
       {showAlert && <Alert severity="success">{successText.text}</Alert>}
     </Box>
-    
   );
 }
 
-export default CadastroFornecedorForm;
+export default EdicaoFornecedorForm;

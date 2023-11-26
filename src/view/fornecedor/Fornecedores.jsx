@@ -3,7 +3,7 @@ import { Delete, Edit } from '@mui/icons-material';
 import { Paper, IconButton, Typography, Grid, Button, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import AlertDialog from '../../components/AlertDialog';
-import { obterTodosFornecedores } from '../../api/FornecedorService';
+import { obterTodosFornecedores, excluirFornecedor } from '../../api/FornecedorService';
 import Title from '../../components/Title';
 import { Link as MuiLink } from 'react-router-dom';
 
@@ -20,7 +20,6 @@ function Fornecedores() {
   const carregarFornecedores = async () => {
     try {
       const response = await obterTodosFornecedores();
-
       if (response && Array.isArray(response)) {
         const rowsWithId = response.map((row, index) => ({ ...row, id: index + 1 }));
         setRows(rowsWithId);
@@ -42,7 +41,7 @@ function Fornecedores() {
       width: 200,
       renderCell: (params) => (
         <div>
-          <IconButton onClick={() => handleEditar(params.row)}>
+          <IconButton component={MuiLink} to={`/editar-fornecedor/${params.row.idFornecedor}`}>
             <Edit fontSize="small" color="primary" />
           </IconButton>
           <IconButton onClick={() => handleExcluir(params.row)}>
@@ -52,10 +51,6 @@ function Fornecedores() {
       ),
     },
   ];
-
-  const handleEditar = (row) => {
-    console.log(`Editar o registro com o ID: ${row.id}`);
-  };
 
   const handleExcluir = (row) => {
     setSelectedRow(row);
@@ -71,14 +66,19 @@ function Fornecedores() {
     setSelectedRow(null);
   };
 
-  const handleConfirmExcluir = () => {
-    console.log(`Excluir o registro com o ID: ${selectedRow.id}`);
-    setRows((prevRows) => prevRows.filter((row) => row.id !== selectedRow.id));
-    handleCloseDialog();
-  };
-
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
+  };
+
+  const handleConfirmExcluir = async () => {
+    try {
+      await excluirFornecedor(selectedRow.idFornecedor);
+      setRows((prevRows) => prevRows.filter((row) => row.idFornecedor !== selectedRow.idFornecedor));
+      handleCloseDialog();
+    } catch (error) {
+      console.error('Erro ao excluir fornecedor:', error.message);
+      handleCloseDialog();
+    }
   };
 
   const filteredRows = rows.filter((row) => {
@@ -126,6 +126,7 @@ function Fornecedores() {
           <Grid item xs={12}>
             <div style={{ marginTop: '8px' }}>
               <DataGrid
+                key={rows.length}
                 rows={filteredRows}
                 columns={columns}
                 pageSize={5}
