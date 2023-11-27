@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Delete, Edit } from '@mui/icons-material';
+import { Delete, Edit, AddBusinessRounded } from '@mui/icons-material';
 import { Paper, IconButton, Typography, Grid, Button, TextField } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import AlertDialog from '../../components/AlertDialog';
@@ -46,6 +46,9 @@ function Fornecedores() {
           </IconButton>
           <IconButton onClick={() => handleExcluir(params.row)}>
             <Delete fontSize="small" color="error" />
+          </IconButton>
+          <IconButton component={MuiLink} to={`/enderecos-fornecedor/${params.row.idFornecedor}`}> 
+            <AddBusinessRounded fontSize="small" color="primary" />
           </IconButton>
         </div>
       ),
