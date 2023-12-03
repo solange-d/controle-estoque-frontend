@@ -28,7 +28,7 @@ function EdicaoFornecedorForm() {
   });
   const [showAlert, setShowAlert] = React.useState(false);
   const navigate = useNavigate();
-  const successText = successMessage('Fornecedor editado com sucesso'); 
+  const successText = successMessage('Fornecedor editado com sucesso');
 
   React.useEffect(() => {
     const carregarFornecedor = async () => {

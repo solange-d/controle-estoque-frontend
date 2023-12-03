@@ -51,12 +51,14 @@ export default function MainMenuButton() {
         </Link>
 
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <AssessmentOutlined fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Relatórios</ListItemText>
-        </MenuItem>
+        <Link to="/relatorio" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <MenuItem>
+            <ListItemIcon>
+              <AssessmentOutlined fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Relatórios</ListItemText>
+          </MenuItem>
+        </Link>
       </MenuList>
     </Paper>
   );

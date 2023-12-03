@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-
-
 import Dashboard from '../view/dashboard/Dashboard';
 import Fornecedores from '../view/fornecedor/Fornecedores';
 import CadastrarFornecedor from '../view/fornecedor/CadastrarFornecedor';
@@ -12,7 +10,7 @@ import CadastrarEnderecoFornecedor from '../view/fornecedor/CadastrarEnderecoFor
 import EditarEnderecoFornecedor from '../view/fornecedor/EditarEnderecoFornecedor'; 
 import CadastroUsuario from '../view/usuario/Usuarios';
 import CadastroProduto from '../view/produto/Produtos';
-
+import { Relatorio } from '../view/relatorio';
 
 function Rotas() {
   return (
@@ -26,6 +24,7 @@ function Rotas() {
       <Route path="/enderecos-fornecedor/:idFornecedor" element={<EnderecosFornecedor />} />
       <Route path="/usuario" element={<CadastroUsuario />} />
       <Route path="/produto" element={<CadastroProduto/>} />
+      <Route path="/relatorio" element={<Relatorio />} />
     </Routes>
   );
 }

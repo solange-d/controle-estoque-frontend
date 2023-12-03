@@ -11,7 +11,7 @@ export default function TotalBilled() {
     <React.Fragment>
       <Title>Faturamento</Title>
       <ListItemIcon>
-              <CurrencyExchangeRounded color='primary' fontSize='large' style={{ color: '#008000' }}/>
+        <CurrencyExchangeRounded color='primary' fontSize='large' style={{ color: '#008000' }}/>
       </ListItemIcon>
       <Typography component="p" variant="h4">
         R$3.024,00
