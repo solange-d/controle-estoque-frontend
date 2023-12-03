@@ -5,7 +5,6 @@ export function Relatorio() {
     const [selectedValue, setSelectedValue] = useState('');
     const [tableData, setTableData] = useState([]);
 
-    
     const handleSelectChange = (event) => {
         setSelectedValue(event.target.value);
     };
@@ -15,7 +14,6 @@ export function Relatorio() {
             fetch(`http://localhost:8080/api/${selectedValue}`)
               .then((response) => response.json())
               .then((data) => {
-                // Atualiza o estado com os dados recebidos do backend
                 setTableData(data);
               })
               .catch((error) => {
@@ -26,18 +24,15 @@ export function Relatorio() {
           }
     }
 
-    // Função para formatar os títulos das colunas
     const formatColumnTitle = (title) => {
-        return title.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()).trim(); // Adiciona um espaço antes de cada letra maiúscula
+        return title.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase()).trim();
     };
     
-    // Função para gerar a tabela com base nos dados recebidos
     const renderTable = () => {
         if (tableData.length === 0) {
           return null;
         }
     
-        // Obtém as chaves para determinar as colunas
         const columns = Object.keys(tableData[0]);
     
         return (
