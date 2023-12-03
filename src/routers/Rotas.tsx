@@ -9,7 +9,8 @@ import EnderecosFornecedor from '../view/fornecedor/EnderecosFornecedor';
 import CadastrarEnderecoFornecedor from '../view/fornecedor/CadastrarEnderecoFornecedor'; 
 import EditarEnderecoFornecedor from '../view/fornecedor/EditarEnderecoFornecedor'; 
 import CadastroUsuario from '../view/usuario/Usuarios';
-import CadastroProduto from '../view/produto/Produtos';
+import Produtos from '../view/produto/Produtos';
+import CadastrarProduto from '../view/produto/CadastrarProduto';
 import { Relatorio } from '../view/relatorio';
 
 function Rotas() {
@@ -23,7 +24,8 @@ function Rotas() {
       <Route path="/cadastrar-endereco/:idFornecedor" element={<CadastrarEnderecoFornecedor />} /> 
       <Route path="/enderecos-fornecedor/:idFornecedor" element={<EnderecosFornecedor />} />
       <Route path="/usuario" element={<CadastroUsuario />} />
-      <Route path="/produto" element={<CadastroProduto/>} />
+      <Route path="/produto" element={<Produtos/>} />
+      <Route path="/cadastrar-produto" element={<CadastrarProduto/>} />
       <Route path="/relatorio" element={<Relatorio />} />
     </Routes>
   );

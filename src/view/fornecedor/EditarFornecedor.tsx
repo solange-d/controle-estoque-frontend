@@ -4,7 +4,7 @@ import Stack from '@mui/material/Stack';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { obterFornecedorPorId, atualizarFornecedor } from '../../api/FornecedorService';
 import Alert from '@mui/material/Alert';
-import { successMessage, errorMessage } from '../../messages/messages';
+import { successMessage } from '../../messages/messages';
 
 interface Params {
   idFornecedor: string;
@@ -28,7 +28,7 @@ function EdicaoFornecedorForm() {
   });
   const [showAlert, setShowAlert] = React.useState(false);
   const navigate = useNavigate();
-  const successText = successMessage('Fornecedor editado com sucesso');
+  const successText = successMessage('Fornecedor editado com sucesso'); 
 
   React.useEffect(() => {
     const carregarFornecedor = async () => {
