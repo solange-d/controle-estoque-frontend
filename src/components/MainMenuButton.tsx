@@ -1,15 +1,21 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Paper, MenuList, MenuItem, ListItemIcon, LocalShippingOutlined,
          ListItemText, Inventory2Outlined, PeopleAltOutlined, DashboardOutlined,
          Divider, AssessmentOutlined } from '../imports/MaterialUI';
 import { Link } from 'react-router-dom';
+import authContext from '../api/context';
 
 export default function MainMenuButton() {
+  const auth = useContext(authContext);
   const handleClose = () => { };
 
   const handlePaperClick = (event) => {
     event.stopPropagation();
   };
+
+  function renderIfIsLogged() {
+    
+  }
 
   return (
     <Paper sx={{ width: 320, maxWidth: '100%' }} onClick={handlePaperClick}>
@@ -51,14 +57,17 @@ export default function MainMenuButton() {
         </Link>
 
         <Divider />
-        <Link to="/relatorio" style={{ textDecoration: 'none', color: 'inherit' }}>
+        { 
+          auth.logado && auth.usuario.administrador ? 
+          <Link to="/relatorio" style={{ textDecoration: 'none', color: 'inherit' }}>
           <MenuItem>
             <ListItemIcon>
               <AssessmentOutlined fontSize="small" />
             </ListItemIcon>
             <ListItemText>Relatórios</ListItemText>
           </MenuItem>
-        </Link>
+        </Link> : null
+        }
       </MenuList>
     </Paper>
   );

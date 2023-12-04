@@ -1,5 +1,7 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { Button, MenuItem, Menu, IconButton, AccountCircleSharp } from '../imports/MaterialUI'; 
+import { useNavigate } from 'react-router-dom';
+import authContext from '../api/context';
 
 export default function PositionedMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -7,9 +9,22 @@ export default function PositionedMenu() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const navigate = useNavigate();
+  const auth = useContext(authContext);
+
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleMinhaConta = () => {
+    navigate('/minha-conta')
+  }
+  
+  const handleSair = () => {
+    auth.logado = false;
+    auth.usuario = {}
+    navigate('/')
+  }
 
   return (
     <div>
@@ -36,8 +51,8 @@ export default function PositionedMenu() {
           horizontal: 'left',
         }}
       >
-        <MenuItem onClick={handleClose}>Minha Conta</MenuItem>
-        <MenuItem onClick={handleClose}>Sair</MenuItem>
+        <MenuItem onClick={handleMinhaConta}>Minha Conta</MenuItem>
+        <MenuItem onClick={handleSair}>Sair</MenuItem>
       </Menu>
     </div>
   );

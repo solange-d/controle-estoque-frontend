@@ -12,6 +12,7 @@ import CadastroUsuario from '../view/usuario/Usuarios';
 import Produtos from '../view/produto/Produtos';
 import CadastrarProduto from '../view/produto/CadastrarProduto';
 import { Relatorio } from '../view/relatorio';
+import MinhaConta from '../view/usuario/minha-conta';
 
 function Rotas() {
   return (
@@ -27,6 +28,7 @@ function Rotas() {
       <Route path="/produto" element={<Produtos/>} />
       <Route path="/cadastrar-produto" element={<CadastrarProduto/>} />
       <Route path="/relatorio" element={<Relatorio />} />
+      <Route path="/minha-conta" element={<MinhaConta />} />
     </Routes>
   );
 }

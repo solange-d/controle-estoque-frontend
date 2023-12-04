@@ -18,7 +18,7 @@
       "typescript": ">=3.2.1 <4"
     },
     
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.js", "src/view/fornecedor/Fornecedores.jsx", "src/components/TextMaskCnpj.jsx", "src/view/fornecedor/EditarFornecedor.tsx", "src/view/fornecedor/EnderecosFornecedor.jsx"],
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.js", "src/view/fornecedor/Fornecedores.jsx", "src/components/TextMaskCnpj.jsx", "src/view/fornecedor/EditarFornecedor.tsx", "src/view/fornecedor/EnderecosFornecedor.jsx", "src/api/context.jsx"],
     "exclude": ["node_modules"]
   }
   
