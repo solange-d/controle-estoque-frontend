@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextField, Button, Paper, Typography, Grid, Box } from '@mui/material';
+import { TextField, Button, Paper, Typography, Grid, Box, MenuItem } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { Link, useNavigate } from 'react-router-dom';
 import { cadastrarFornecedor } from '../../api/FornecedorService';
@@ -11,6 +11,7 @@ interface FormValues {
   email: string;
   nome: string;
   telefone: string;
+  fabricante: boolean;
 }
 
 function CadastroFornecedorForm() {
@@ -19,6 +20,7 @@ function CadastroFornecedorForm() {
     email: '',
     nome: '',
     telefone: '',
+    fabricante: false,
   });
 
   const [showAlert, setShowAlert] = React.useState(false);
@@ -45,10 +47,10 @@ function CadastroFornecedorForm() {
         email: '',
         nome: '',
         telefone: '',
+        fabricante: false,
       });
 
     } catch (error) {
-      // Lide com erros durante o cadastro, por exemplo, exibindo uma mensagem de erro
       console.error('Erro ao cadastrar fornecedor:', error);
     }
   };
@@ -108,6 +110,19 @@ function CadastroFornecedorForm() {
                 value={formValues.telefone}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                select
+                fullWidth
+                label="É Fabricante?"
+                name="fabricante"
+                value={formValues.fabricante ? 'true' : 'false'}
+                onChange={(e) => setFormValues({ ...formValues, fabricante: e.target.value === 'true' })}
+              >
+                <MenuItem value="true">Sim</MenuItem>
+                <MenuItem value="false">Não</MenuItem>
+              </TextField>
             </Grid>
             <Grid item xs={8}/>
             <Grid item xs={6}>

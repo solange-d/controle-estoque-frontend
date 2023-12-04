@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TextField, Button, Paper, Typography, Grid, Box } from '@mui/material';
+import { TextField, Button, Paper, Typography, Grid, Box, MenuItem } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { obterFornecedorPorId, atualizarFornecedor } from '../../api/FornecedorService';
@@ -16,6 +16,7 @@ interface FormValues {
   email: string;
   nome: string;
   telefone: string;
+  fabricante: boolean;
 }
 
 function EdicaoFornecedorForm() {
@@ -25,6 +26,7 @@ function EdicaoFornecedorForm() {
     email: '',
     nome: '',
     telefone: '',
+    fabricante: false,
   });
   const [showAlert, setShowAlert] = React.useState(false);
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ function EdicaoFornecedorForm() {
           email: fornecedor.email,
           nome: fornecedor.nome,
           telefone: fornecedor.telefone,
+          fabricante: fornecedor.fabricante,
         });
       } catch (error) {
         console.error('Erro ao carregar fornecedor para edição:', error);
@@ -127,6 +130,19 @@ function EdicaoFornecedorForm() {
                 value={formValues.telefone}
                 onChange={handleChange}
               />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                select
+                fullWidth
+                label="É Fabricante?"
+                name="fabricante"
+                value={formValues.fabricante ? 'true' : 'false'}
+                onChange={(e) => setFormValues({ ...formValues, fabricante: e.target.value === 'true' })}
+              >
+                <MenuItem value="true">Sim</MenuItem>
+                <MenuItem value="false">Não</MenuItem>
+              </TextField>
             </Grid>
             <Grid item xs={8} />
             <Grid item xs={6}>

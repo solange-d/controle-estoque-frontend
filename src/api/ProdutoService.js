@@ -89,7 +89,7 @@ export async function obterProdutoPorId(idProduto) {
   }
 }
 
-export async function atualizarProduto(idFornecedor, idProduto, dadosAtualizados) {
+export async function atualizarProduto( idProduto, idFornecedor, dadosAtualizados) {
   try {
     const response = await fetch(`${BASE_URL}produto/fornecedor/${idFornecedor}/produto/${idProduto}`, {
       method: 'PUT',
@@ -97,6 +97,7 @@ export async function atualizarProduto(idFornecedor, idProduto, dadosAtualizados
         Accept: 'application/json',
         'Content-Type': 'application/json',
       },
+      
       body: JSON.stringify(dadosAtualizados),
     });
 

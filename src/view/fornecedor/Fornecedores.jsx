@@ -21,7 +21,11 @@ function Fornecedores() {
     try {
       const response = await obterTodosFornecedores();
       if (response && Array.isArray(response)) {
-        const rowsWithId = response.map((row, index) => ({ ...row, id: index + 1 }));
+        const rowsWithId = response.map((row, index) => ({
+          ...row,
+          id: index + 1,
+          fabricante: index % 2 === 0 ? 'sim' : 'não',
+        }));
         setRows(rowsWithId);
       } else {
         console.error('A resposta da API não contém um array de dados');
@@ -37,6 +41,7 @@ function Fornecedores() {
     { field: 'email', headerName: 'Email', width: 230 },
     { field: 'cnpj', headerName: 'CNPJ', width: 130 },
     { field: 'telefone', headerName: 'Telefone', width: 130 },
+    { field: 'fabricante', headerName: 'Fabricante', width: 120 },
     {
       width: 200,
       renderCell: (params) => (
@@ -47,7 +52,7 @@ function Fornecedores() {
           <IconButton onClick={() => handleExcluir(params.row)}>
             <Delete fontSize="small" color="error" />
           </IconButton>
-          <IconButton component={MuiLink} to={`/enderecos-fornecedor/${params.row.idFornecedor}`}> 
+          <IconButton component={MuiLink} to={`/enderecos-fornecedor/${params.row.idFornecedor}`}>
             <AddBusinessRounded fontSize="small" color="primary" />
           </IconButton>
         </div>
@@ -89,7 +94,8 @@ function Fornecedores() {
       row.nome.toLowerCase().includes(searchText.toLowerCase()) ||
       row.email.toLowerCase().includes(searchText.toLowerCase()) ||
       row.cnpj.toLowerCase().includes(searchText.toLowerCase()) ||
-      row.telefone.toLowerCase().includes(searchText.toLowerCase())
+      row.telefone.toLowerCase().includes(searchText.toLowerCase()) ||
+      (row.fabricante && row.fabricante.toLowerCase().includes(searchText.toLowerCase()))
     );
   });
 
@@ -99,7 +105,16 @@ function Fornecedores() {
         <Grid container spacing={2}>
           <Grid item>
             <Typography variant="h6">
-              <MuiLink to="/" style={{ textDecoration: 'none', color: 'gray', fontSize: '12px', cursor: 'pointer', underline: 'hover' }}>
+              <MuiLink
+                to="/"
+                style={{
+                  textDecoration: 'none',
+                  color: 'gray',
+                  fontSize: '12px',
+                  cursor: 'pointer',
+                  underline: 'hover',
+                }}
+              >
                 Home
               </MuiLink>
             </Typography>
@@ -116,11 +131,11 @@ function Fornecedores() {
                   fullWidth
                   value={searchText}
                   onChange={handleSearchChange}
-                  size='small'
+                  size="small"
                 />
               </Grid>
               <Grid item xs={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button component={MuiLink} to="/cadastrar-fornecedor" variant="contained" color="success" size='large'>
+                <Button component={MuiLink} to="/cadastrar-fornecedor" variant="contained" color="success" size="large">
                   Cadastrar
                 </Button>
               </Grid>
@@ -128,22 +143,12 @@ function Fornecedores() {
           </Grid>
           <Grid item xs={12}>
             <div style={{ marginTop: '8px' }}>
-              <DataGrid
-                key={rows.length}
-                rows={filteredRows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
+              <DataGrid key={rows.length} rows={filteredRows} columns={columns} pageSize={6} rowsPerPageOptions={[6]} />
             </div>
           </Grid>
         </Grid>
       </Paper>
-      <AlertDialog
-        open={openDialog}
-        handleClose={handleCloseDialog}
-        handleConfirmExcluir={handleConfirmExcluir}
-      />
+      <AlertDialog open={openDialog} handleClose={handleCloseDialog} handleConfirmExcluir={handleConfirmExcluir} />
     </div>
   );
 }

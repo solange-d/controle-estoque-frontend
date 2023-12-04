@@ -11,6 +11,7 @@ import EditarEnderecoFornecedor from '../view/fornecedor/EditarEnderecoFornecedo
 import CadastroUsuario from '../view/usuario/Usuarios';
 import Produtos from '../view/produto/Produtos';
 import CadastrarProduto from '../view/produto/CadastrarProduto';
+import EditarProduto from '../view/produto/EditarProduto';
 import { Relatorio } from '../view/relatorio';
 
 function Rotas() {
@@ -26,6 +27,7 @@ function Rotas() {
       <Route path="/usuario" element={<CadastroUsuario />} />
       <Route path="/produto" element={<Produtos/>} />
       <Route path="/cadastrar-produto" element={<CadastrarProduto/>} />
+      <Route path="/editar-produto/:idProduto" element={<EditarProduto/>} />
       <Route path="/relatorio" element={<Relatorio />} />
     </Routes>
   );
