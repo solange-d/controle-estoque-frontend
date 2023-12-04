@@ -42,7 +42,6 @@ function EdicaoEnderecoFornecedorForm() {
     const carregarEndereco = async () => {
       try {
         const endereco = await obterEndereco(idEndereco);
-        debugger
         setFormValues({
           cep: endereco.cep,
           logradouro: endereco.logradouro,
