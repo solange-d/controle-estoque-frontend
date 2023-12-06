@@ -30,34 +30,35 @@ const MinhaConta = () => {
   }
 
   if(!auth.logado) {
-    return <>
-      <div>
-        <form onSubmit={handleLogin}>
-          <Grid sx={{marginTop:2, marginLeft:2, maxWidth: 400}} gap={2} container direction='column'>
-            <TextField
-              required
-              label="Email"
-              name="email"
-              id='email'
-              inputRef={refEmail}
-              >
-            </TextField>
-            <TextField
-              required
-              type="password"
-              label="Senha"
-              name="senha"
-              id='senha'
-              inputRef={refSenha}
-              >
-            </TextField>
-            <Button variant="contained" type="submit">
-              Login
-            </Button>
-          </Grid>
-        </form>
-      </div>
-    </>
+    return <Grid
+        container
+        justifyContent="center"
+        alignItems="center"
+        style={{ minHeight: '80vh' }}
+      >
+      <form onSubmit={handleLogin}>
+        <Grid sx={{ marginTop: 2, minWidth: 400, maxWidth: 600 }} gap={2} container direction="column">
+          <TextField
+            required
+            label="Email"
+            name="email"
+            id="email"
+            inputRef={refEmail}
+          />
+          <TextField
+            required
+            type="password"
+            label="Senha"
+            name="senha"
+            id="senha"
+            inputRef={refSenha}
+          />
+          <Button variant="contained" type="submit">
+            Login
+          </Button>
+        </Grid>
+      </form>
+    </Grid>
   } else {
     return <>
       <Typography sx={{marginTop:2, marginLeft:2}}>
